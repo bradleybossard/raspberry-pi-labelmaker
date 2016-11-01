@@ -1,0 +1,24 @@
+{
+  "name": "raspberry-pi-labelmaker",
+  "version": "1.0.0",
+  "description": "Create a label for identifying your RPis",
+  "main": "fetch_data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradleybossard/raspberry-pi-labelmaker.git"
+  },
+  "keywords": [],
+  "author": "Bradley Bossard <bradleybossard@gmail.com> (http://bradleybossard.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradleybossard/raspberry-pi-labelmaker/issues"
+  },
+  "homepage": "https://github.com/bradleybossard/raspberry-pi-labelmaker#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "fetch": "^1.1.0"
+  }
+}
