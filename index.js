@@ -13,13 +13,9 @@ function getRevision(callback) {
     }
     const revision = stdout.trim();
     callback(revision);
-    //return revision;
   });
 }
 
-getRevision(function(revision) {
-  console.log(revision);
-});
 
 function readFile() {
   // Read the file and print its contents.
@@ -43,18 +39,34 @@ function readFile() {
   });
 }
 
-//readFile();
+function fetchFile(callback) {
+  const url = 'http://elinux.org/RPi_HardwareHistory#Board_Revision_History';
+  fetch.fetchUrl(url, function(err, meta, body) {
+    fs.writeFile(filename, body, function(err) {
+      if(err) {
+        callback(err);
+      }
+      callback();
+    }); 
+  });
+}
 
 /*
-const url = 'http://elinux.org/RPi_HardwareHistory#Board_Revision_History';
-fetch.fetchUrl(url, function(err, meta, body) {
-  fs.writeFile(filename, body, function(err) {
-    if(err) {
-      return console.log(err);
-    }
-
-    console.log("The file was saved!");
-  }); 
+getRevision(function(revision) {
+  console.log(revision);
 });
 */
+
+try {
+  // Query the entry
+  stats = fs.lstatSync(filename);
+}
+catch (e) {
+  console.log('File does not exist');
+  fetchFile(function() {
+  });
+}
+
+//readFile();
+
 
