@@ -19,11 +19,12 @@ function getRevision(callback) {
 
 function readFile() {
   // Read the file and print its contents.
+  //
+  let revisions = {};
   fs.readFile(filename, 'utf8', function(err, body) {
     if (err) throw err;
 
     let $ = cheerio.load(body);
-    //console.log($('table:nth-of-type(2)').html());
     const $table = $('table:nth-of-type(2)');
     $table.find('tr').each(function(i, el) {
       const $td = $(el).find('td');
@@ -33,10 +34,18 @@ function readFile() {
       const pcbRevision = $($td.get(3)).text().trim();
       const memory = $($td.get(4)).text().trim();
       const notes = $($td.get(5)).text().trim();
+      revisions[revision] = { revision: revision,
+                              releaseDate: releaseDate,
+                              model: model,
+                              pcbRevision: pcbRevision,
+                              memory: memory,
+                              notes: notes
+                            };
       //console.log(revision, releaseDate, model, pcbRevision, memory, notes);
     });
-
+    console.log(revisions);
   });
+
 }
 
 function fetchFile(callback) {
@@ -67,6 +76,5 @@ catch (e) {
   });
 }
 
-//readFile();
-
+readFile();
 
