@@ -17,11 +17,11 @@ function getRevision(callback) {
 }
 
 
-function readFile() {
+function readFile(model) {
   // Read the file and print its contents.
   //
   let revisions = {};
-  fs.readFile(filename, 'utf8', function(err, body) {
+  fs.readFileSync(filename, 'utf8', function(err, body) {
     if (err) throw err;
 
     let $ = cheerio.load(body);
@@ -41,11 +41,12 @@ function readFile() {
                               memory: memory,
                               notes: notes
                             };
-      //console.log(revision, releaseDate, model, pcbRevision, memory, notes);
     });
-    console.log(revisions);
+    //console.log(revisions);
+  }).then(function() {
+    console.log(model, revisions);
+    return revisions[model];
   });
-
 }
 
 function fetchFile(callback) {
@@ -60,11 +61,6 @@ function fetchFile(callback) {
   });
 }
 
-/*
-getRevision(function(revision) {
-  console.log(revision);
-});
-*/
 
 try {
   // Query the entry
@@ -76,5 +72,9 @@ catch (e) {
   });
 }
 
-readFile();
 
+
+getRevision(function(revision) {
+  const details = readFile(revision);
+  console.log(details);
+});
